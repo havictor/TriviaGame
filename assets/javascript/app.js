@@ -14,7 +14,7 @@ var quiz = {"question": ["Due to excessive sand and gravel, the motorcycle rider
 "answer2":["Near the left edge of the right lane", "take sharp turn", "centre of the lane", "gear changing method", "tire travel","maintain straight posture", "to avoid blindspots of the vehicle", "Road and weather conditions", "No stopping power", "square, push, lean", "when going down a hill","Both brakes simultaneously"],
 "answer3": ["Along the middle of the lane", "lean the bike in the direction of the turn", "left edge of the lane", "push steering method", "tire track", "lean in  the direction of the turn", "to see the bumps or rough pavement", "Speed limit on highways", "Half of total stopping power", "turn, slow, squeeze", "on a four-way road", "Only the rear brake"],
 "answer4": ["Near the right edge of the left lane", "use a higher gear", "right edge of the lane", "clutch pushing method", "vehicle track", "lean in the opposite direction of the turn", "to judge the speed of hte vehicle", "Visibility of oncoming vehicles", "Three quarters of total stopping power", "straighten, square, squeeze", "near intersections", "Only the front brake"],
-"answerKey": [function(){answer1 = 1; answer2 = 0}, function(){answer3 = 1, answer1 = 0}, function(){answer2 = 1; answer3 = 0}, function(){answer3 = 1; answer2 = 0}, function() {answer3 = 0; answer3 = 1;}, function() {answer3 = 0; answer3 = 1;}, function() {answer3 = 0; answer3 = 1;}, function() {answer3 = 0; answer2 = 1;}, function() {answer2 = 0; answer1 = 1;}, function() {answer1 = 0; answer4 = 1;}, function() {answer4 = 0; answer1 = 1;}, function() {answer1 = 0; answer2 = 1;}]
+"answerKey": [function(){answer1 = 1; answer2 = 0; $("#answer1").addClass("hiddenTrue")}, function(){answer3 = 1, answer1 = 0; $("#answer3").addClass("hiddenTrue")}, function(){answer2 = 1; answer3 = 0; $("#answer2").addClass("hiddenTrue")}, function(){answer3 = 1; answer2 = 0; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer3 = 1; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer3 = 1; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer3 = 1; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer2 = 1; $("#answer2").addClass("hiddenTrue")}, function() {answer2 = 0; answer1 = 1; $("#answer1").addClass("hiddenTrue")}, function() {answer1 = 0; answer4 = 1; $("#answer4").addClass("hiddenTrue")}, function() {answer4 = 0; answer1 = 1; $("#answer1").addClass("hiddenTrue")}, function() {answer1 = 0; answer2 = 1; $("#answer2").addClass("hiddenTrue")}]
 }
 
 
@@ -35,20 +35,24 @@ function nextQuestion() {
     $("#answer2").attr("data-correct", answer2)
     $("#answer3").attr("data-correct", answer3)
     $("#answer4").attr("data-correct", answer4)
+    timerCount = 5; //set to 31 later
+    decrease()
 }
 
 
 function decrease() {
-    clearInterval(timerCount);
+    clearInterval(timer);
     timerCount--;
     timer = setTimeout(decrease, 1000);
     $("#timer").text("Time remaining: "+timerCount);
-    if (timerCount == 0) {
+    if (timerCount <= 0) {
         clearInterval(timer);
         incorrectCount++;
-        resolveAnswer(); // ??
+        incorrectAnswer(); // ??
         //display message for timeout
+        setTimeout(delayToNextQuestion, 5000);
     }
+    clearInterval(delayToNextQuestion);
 }
 
 $(".answer").click(resolveAnswer);
@@ -60,50 +64,41 @@ $(".answer").click(resolveAnswer);
 //countdown timer
 
 
-var check
 
 function resolveAnswer() {
-    progressCount++
+    clearInterval(timer);
+    var check
     check = $(this).attr("data-correct");
-    if (check == "1") {
-        correctAnswer();
+    if ((check == "1") && ((correctCount + incorrectCount) <= progressCount)) {
+        correctCount++
+        $(this).addClass("correct");
     }
-    else {
+    else if (((correctCount + incorrectCount) <= progressCount) && (check == "0")) {
+        $(this).addClass("selected");
         incorrectAnswer();
     }
     setTimeout(delayToNextQuestion, 5000);
 };
 
-function correctAnswer() {
-    correctCount++
-    $(this).addClass("correct");
-
-    //display correct answer
-};
-
 function incorrectAnswer() {
     incorrectCount++
-    $(this).addClass("selected");
     for (var k = 1; k < 4; k++) {
         if ("answer"+k == true) {
             $(answer+k).addClass("correct")
         }
-    } //displays correct answer, but i don't think so?
+    }
+    $(".hiddenTrue").css("background-color", "green");
 };
 
 function delayToNextQuestion() {
-    if (progressCount != 12) {
-        $("#answer1").removeClass("correct");
-        $("#answer1").removeClass("selected");
-
-        $("#answer2").removeClass("correct");
-        $("#answer2").removeClass("selected");
-
-        $("#answer3").removeClass("correct");
-        $("#answer3").removeClass("selected");
-
-        $("#answer4").removeClass("correct");
-        $("#answer4").removeClass("selected");
+    progressCount++
+    $(".hiddenTrue").removeAttr("style");
+    $("#answer1").removeClass("correct selected hiddenTrue");
+    $("#answer2").removeClass("correct selected hiddenTrue");
+    $("#answer3").removeClass("correct selected hiddenTrue");
+    $("#answer4").removeClass("correct selected hiddenTrue");
+    if (progressCount <= 12) {
+        nextQuestion();
     }
     else {
         //display final screen

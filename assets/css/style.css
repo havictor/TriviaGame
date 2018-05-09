@@ -8,9 +8,21 @@
     background-color: yellow;
 }
 
+.selected:hover {
+    background-color: yellow;
+}
+.selected:active {
+    background-color: yellow;
+}
+selected:focus {
+    background-color:yellow;
+}
+
 .correct {
     background-color: green;
 }
+
+.correct:hover {background-color: green;}
 
 .container {
     display: flex;
