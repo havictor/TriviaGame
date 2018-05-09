@@ -1,6 +1,6 @@
 var correctCount = 0;
 var incorrectCount = 0;
-var progressCount = 0; //set to 0 at final version
+var progressCount = 0;
 var timerCount = 5; //change back to 31 in final version
 var timer;
 var delay;
@@ -47,7 +47,7 @@ function decrease() {
     if (timerCount <= 0) {
         clearInterval(timer);
         incorrectAnswer();
-        //display message for timeout
+        $("#notification")
         delay();
     }
 };
@@ -96,15 +96,15 @@ function delayToNextQuestion() {
         Wresults.text("Correct: "+correctCount);
         var Lresults = $("<div>");
         Lresults.text("Incorrect: "+incorrectCount);
+        var button = $("<button>");
+        button.attr("id", "reroll");
+        button.text("Try Again?");
         $("#results").css("visibility", "visible");
-        $("#results").prepend(Wresults, Lresults);
-        //display final screen
+        $("#results").prepend(Wresults, Lresults, button);
     }
 };
 
-$("#restart").click(function() {
-    console.log("yolo")
-    /*
+$("#results").on("click", "#reroll", function() {
     $("#results").empty();
     $(".game").css("visibility", "visible");
     $("#results").css("visibility", "hidden");
@@ -113,7 +113,6 @@ $("#restart").click(function() {
     progressCount = 0;
     timerCount = 5; //set to 31 in final version
     nextQuestion();
-    */
 });
 
 //todo:
