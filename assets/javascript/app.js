@@ -1,7 +1,7 @@
 var correctCount = 0;
 var incorrectCount = 0;
 var progressCount = 0;
-var timerCount = 5; //change back to 31 in final version
+var timerCount = 31;
 var timer;
 var delay;
 
@@ -30,12 +30,13 @@ function nextQuestion() {
     $("#answer2").text(quiz.answer2[progressCount])
     $("#answer3").text(quiz.answer3[progressCount])
     $("#answer4").text(quiz.answer4[progressCount])
+    $("#notification").empty();
     quiz.answerKey[progressCount]()
     $("#answer1").attr("data-correct", answer1)
     $("#answer2").attr("data-correct", answer2)
     $("#answer3").attr("data-correct", answer3)
     $("#answer4").attr("data-correct", answer4)
-    timerCount = 5; //set to 31 later
+    timerCount = 31;
     decrease()
 }
 
@@ -47,7 +48,7 @@ function decrease() {
     if (timerCount <= 0) {
         clearInterval(timer);
         incorrectAnswer();
-        $("#notification")
+        $("#notification").html("<h3>Time's Up!</h3>");
         delay();
     }
 };
@@ -111,12 +112,6 @@ $("#results").on("click", "#reroll", function() {
     correctCount = 0;
     incorrectCount = 0;
     progressCount = 0;
-    timerCount = 5; //set to 31 in final version
+    timerCount = 31;
     nextQuestion();
 });
-
-//todo:
-//if timer runs out, advise time up, and show correct answer.
-//if wrong answer, advise wrong answer and then display correct answer.
-
-//timer to begin next question
