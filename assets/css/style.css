@@ -1,0 +1,17 @@
+#answer {
+    /* on hover of answer, change style & border colour*/
+};
+
+
+.selected {
+    background-color: yellow;
+}
+
+.correct {
+    background-color: green;
+}
+
+
+.container {
+    display: flex;
+}
