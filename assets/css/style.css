@@ -1,7 +1,8 @@
-#answer {
-    /* on hover of answer, change style & border colour*/
+.answer:hover {
+    background-color: teal;
+    border: 3px;
+    border-color: black;
 };
-
 
 .selected {
     background-color: yellow;
@@ -10,7 +11,6 @@
 .correct {
     background-color: green;
 }
-
 
 .container {
     display: flex;
