@@ -1,8 +1,9 @@
 var correctCount = 0;
 var incorrectCount = 0;
-var progressCount = 0;
+var progressCount = 0; //set to 0 at final version
 var timerCount = 5; //change back to 31 in final version
 var timer;
+var delay;
 
 var answer1 = 0;
 var answer2 = 0;
@@ -17,14 +18,13 @@ var quiz = {"question": ["Due to excessive sand and gravel, the motorcycle rider
 "answerKey": [function(){answer1 = 1; answer2 = 0; $("#answer1").addClass("hiddenTrue")}, function(){answer3 = 1, answer1 = 0; $("#answer3").addClass("hiddenTrue")}, function(){answer2 = 1; answer3 = 0; $("#answer2").addClass("hiddenTrue")}, function(){answer3 = 1; answer2 = 0; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer3 = 1; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer3 = 1; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer3 = 1; $("#answer3").addClass("hiddenTrue")}, function() {answer3 = 0; answer2 = 1; $("#answer2").addClass("hiddenTrue")}, function() {answer2 = 0; answer1 = 1; $("#answer1").addClass("hiddenTrue")}, function() {answer1 = 0; answer4 = 1; $("#answer4").addClass("hiddenTrue")}, function() {answer4 = 0; answer1 = 1; $("#answer1").addClass("hiddenTrue")}, function() {answer1 = 0; answer2 = 1; $("#answer2").addClass("hiddenTrue")}]
 }
 
-
-
 $(document).ready(
 nextQuestion(),
 decrease()
 );
 
 function nextQuestion() {
+    $("#results").css("visibility", "hidden");
     $("#question").text(quiz.question[progressCount])
     $("#answer1").text(quiz.answer1[progressCount])
     $("#answer2").text(quiz.answer2[progressCount])
@@ -39,7 +39,6 @@ function nextQuestion() {
     decrease()
 }
 
-
 function decrease() {
     clearInterval(timer);
     timerCount--;
@@ -47,23 +46,13 @@ function decrease() {
     $("#timer").text("Time remaining: "+timerCount);
     if (timerCount <= 0) {
         clearInterval(timer);
-        incorrectCount++;
-        incorrectAnswer(); // ??
+        incorrectAnswer();
         //display message for timeout
-        setTimeout(delayToNextQuestion, 5000);
+        delay();
     }
-    clearInterval(delayToNextQuestion);
-}
+};
 
 $(".answer").click(resolveAnswer);
-
-//multiple choice questions created
-//end condition when time runs out
-//reveal questions right/wrong at end of time
-//cannot pick more than 1 answer per question
-//countdown timer
-
-
 
 function resolveAnswer() {
     clearInterval(timer);
@@ -72,21 +61,22 @@ function resolveAnswer() {
     if ((check == "1") && ((correctCount + incorrectCount) <= progressCount)) {
         correctCount++
         $(this).addClass("correct");
+        delay();
     }
     else if (((correctCount + incorrectCount) <= progressCount) && (check == "0")) {
         $(this).addClass("selected");
         incorrectAnswer();
+        delay();
     }
-    setTimeout(delayToNextQuestion, 5000);
 };
+
+function delay() {
+    clearInterval(delayToNextQuestion);
+    setTimeout(delayToNextQuestion, 5000);
+}
 
 function incorrectAnswer() {
     incorrectCount++
-    for (var k = 1; k < 4; k++) {
-        if ("answer"+k == true) {
-            $(answer+k).addClass("correct")
-        }
-    }
     $(".hiddenTrue").css("background-color", "green");
 };
 
@@ -97,26 +87,37 @@ function delayToNextQuestion() {
     $("#answer2").removeClass("correct selected hiddenTrue");
     $("#answer3").removeClass("correct selected hiddenTrue");
     $("#answer4").removeClass("correct selected hiddenTrue");
-    if (progressCount <= 12) {
+    if (progressCount <= 11) {
         nextQuestion();
     }
     else {
+        $(".game").css("visibility", "hidden");
+        var Wresults = $("<div>");
+        Wresults.text("Correct: "+correctCount);
+        var Lresults = $("<div>");
+        Lresults.text("Incorrect: "+incorrectCount);
+        $("#results").css("visibility", "visible");
+        $("#results").prepend(Wresults, Lresults);
         //display final screen
     }
 };
 
+$("#restart").click(function() {
+    console.log("yolo")
+    /*
+    $("#results").empty();
+    $(".game").css("visibility", "visible");
+    $("#results").css("visibility", "hidden");
+    correctCount = 0;
+    incorrectCount = 0;
+    progressCount = 0;
+    timerCount = 5; //set to 31 in final version
+    nextQuestion();
+    */
+});
 
-
-//
-
-//upon correct, show correct answer
-    //maybe highlight incorrect choice selected
-
-
+//todo:
 //if timer runs out, advise time up, and show correct answer.
 //if wrong answer, advise wrong answer and then display correct answer.
 
 //timer to begin next question
-
-//if no more questions, dsiplay correctCount and incorrectCount
-    //option to restart game (without reloading page)
