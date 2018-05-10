@@ -1,3 +1,12 @@
+.container {
+    background-color: grey;
+}
+
+.answer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .answer:hover {
     background-color: teal;
     border: 3px;
@@ -27,3 +36,4 @@ selected:focus {
 .container {
     display: flex;
 }
+

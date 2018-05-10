@@ -102,6 +102,7 @@ function delayToNextQuestion() {
         button.text("Try Again?");
         $("#results").css("visibility", "visible");
         $("#results").prepend(Wresults, Lresults, button);
+        $("#notification").html("<h3>Game Over!</h3>")
     }
 };
 
