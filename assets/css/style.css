@@ -22,6 +22,7 @@ div.answer.selected {
         background-color: teal;
         border-width: 3px;
         border-color: black;
+    }
 }
 
 .correct {
