@@ -1,5 +1,6 @@
 .container {
     background-color: grey;
+    margin-top: 80px;
 }
 
 .answer {
@@ -7,10 +8,13 @@
     padding-bottom: 5px;
 }
 
+body {
+    background-image: url("../images/Ninja.jpg");
+}
+
 div.answer.selected {
     background-color: yellow;
     border-color: yellow;
-    
 }
 
 .correct {
@@ -18,9 +22,19 @@ div.answer.selected {
     border-color: green;
 }
 
+#notification {
+    height: 18px;
+    margin-bottom: 3px;
+}
+
+#timer {
+    margin-top: 10px;
+}
+
 div {
     text-align: center;
     font-family: 'PT Sans', sans-serif;
+    font-weight: bold;
 }
 
 @media only screen and (min-width: 600px) {
