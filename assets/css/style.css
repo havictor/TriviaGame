@@ -3,29 +3,30 @@
 }
 
 .answer {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.answer:hover {
-    background-color: teal;
-    border: 3px;
-    border-color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 div.answer.selected {
     background-color: yellow;
     border-color: yellow;
+    
 }
-
 
 .correct {
     background-color: green;
     border-color: green;
 }
 
-.correct:hover {background-color: green;}
+div {
+    text-align: center;
+    font-family: 'PT Sans', sans-serif;
+}
 
-.container {
-    display: flex;
+@media only screen and (min-width: 600px) {
+    .answer:hover {
+        background-color: teal;
+        border: 3px;
+        border-color: black;
+    }
 }

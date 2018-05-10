@@ -61,11 +61,13 @@ function resolveAnswer() {
     check = $(this).attr("data-correct");
     if ((check == "1") && ((correctCount + incorrectCount) <= progressCount)) {
         correctCount++
+        $("#notification").html("<h3>Correct!</h3>");
         $(this).addClass("correct");
         delay();
     }
     else if (((correctCount + incorrectCount) <= progressCount) && (check == "0")) {
         $(this).addClass("selected");
+        $("#notification").html("<h3>Incorrect!</h3>");
         incorrectAnswer();
         delay();
     }
