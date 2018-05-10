@@ -11,24 +11,17 @@
     background-color: teal;
     border: 3px;
     border-color: black;
-};
-
-.selected {
-    background-color: yellow;
 }
 
-.selected:hover {
+div.answer.selected {
     background-color: yellow;
+    border-color: yellow;
 }
-.selected:active {
-    background-color: yellow;
-}
-selected:focus {
-    background-color:yellow;
-}
+
 
 .correct {
     background-color: green;
+    border-color: green;
 }
 
 .correct:hover {background-color: green;}
@@ -36,4 +29,3 @@ selected:focus {
 .container {
     display: flex;
 }
-
