@@ -17,9 +17,20 @@ div.answer.selected {
     border-color: yellow;
 }
 
+@media only screen and (min-width: 600px) {
+    .answer:hover {
+        background-color: teal;
+        border-width: 3px;
+        border-color: black;
+}
+
 .correct {
     background-color: green;
     border-color: green;
+}
+
+.correct:hover {
+    background-color: green;
 }
 
 #notification {
@@ -37,10 +48,3 @@ div {
     font-weight: bold;
 }
 
-@media only screen and (min-width: 600px) {
-    .answer:hover {
-        background-color: teal;
-        border: 3px;
-        border-color: black;
-    }
-}
